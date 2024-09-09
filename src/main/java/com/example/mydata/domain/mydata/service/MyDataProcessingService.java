@@ -10,6 +10,11 @@ import com.example.mydata.domain.mydata.dto.MyDataEnrollmentRequest;
 import com.example.mydata.domain.mydata.mapper.CodeMapper;
 import com.example.mydata.domain.pension.dto.PensionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;  // 수정된 부분
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -27,7 +32,7 @@ public class MyDataProcessingService {
         this.codeMapper = codeMapper;
     }
 
-    public List<Object> processUserData(MyDataEnrollmentRequest request) {
+    public List<Object> processUserData(String accessToken, MyDataEnrollmentRequest request) {
         List<Object> assets = new ArrayList<>();
         String ci = request.getCi();
         List<Integer> assetCodes = request.getAssetCodes();
@@ -37,43 +42,43 @@ public class MyDataProcessingService {
 
             switch (codeCategory) {
                 case "은행 코드":
-                    List<BankDTO> bankData = fetchBankData(ci, assetCode);
+                    List<BankDTO> bankData = fetchBankData(ci, assetCode,accessToken);
                     if (bankData != null) {
                         assets.addAll(bankData);
                     }
                     break;
                 case "카드 코드":
-                    List<CardDTO> cardData = fetchCardData(ci, assetCode);
+                    List<CardDTO> cardData = fetchCardData(ci, assetCode,accessToken);
                     if (cardData != null) {
                         assets.addAll(cardData);
                     }
                     break;
                 case "기타 금융 코드":
-                    List<LoanDTO> loanData = fetchLoanData(ci, assetCode);
+                    List<LoanDTO> loanData = fetchLoanData(ci, assetCode,accessToken);
                     if (loanData != null) {
                         assets.addAll(loanData);
                     }
                     break;
                 case "증권 코드":
-                    List<InvestDTO> investData = fetchInvestData(ci, assetCode);
+                    List<InvestDTO> investData = fetchInvestData(ci, assetCode,accessToken);
                     if (investData != null) {
                         assets.addAll(investData);
                     }
                     break;
                 case "보험 코드":
-                    List<InsuranceDTO> insuranceData = fetchInsuranceData(ci, assetCode);
+                    List<InsuranceDTO> insuranceData = fetchInsuranceData(ci, assetCode,accessToken);
                     if (insuranceData != null) {
                         assets.addAll(insuranceData);
                     }
                     break;
                 case "연금 코드":
-                    List<PensionDTO> pensionData = fetchPensionData(ci, assetCode);
+                    List<PensionDTO> pensionData = fetchPensionData(ci, assetCode,accessToken);
                     if (pensionData != null) {
                         assets.addAll(pensionData);
                     }
                     break;
                 case "공공기관 코드":
-                    List<PublicDTO> publicData = fetchPublicData(ci, assetCode);
+                    List<PublicDTO> publicData = fetchPublicData(ci, assetCode,accessToken);
                     if (publicData != null) {
                         assets.addAll(publicData);
                     }
@@ -85,53 +90,121 @@ public class MyDataProcessingService {
 
         return assets;
     }
-    private List<BankDTO> fetchBankData(String userCi, int bankCode) {
+    private List<BankDTO> fetchBankData(String userCi, int bankCode, String accessToken) {
         String url = "http://localhost:8081/api/bank?userCi=" + userCi + "&bankCode=" + bankCode;
-        List<BankDTO> response = restTemplate.getForObject(url, List.class);
-        System.out.println("Bank Data: " + response);
-        return response;
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + accessToken);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<List<BankDTO>> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                entity,
+                new ParameterizedTypeReference<List<BankDTO>>() {}
+        );
+        return response.getBody();
     }
 
-    private List<CardDTO> fetchCardData(String userCi, int cardCode) {
+    private List<CardDTO> fetchCardData(String userCi, int cardCode, String accessToken) {
         String url = "http://localhost:8081/api/card?userCi=" + userCi + "&cardCode=" + cardCode;
-        List<CardDTO> response = restTemplate.getForObject(url, List.class);
-        System.out.println("Card Data: " + response);
-        return response;
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + accessToken);
+
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<List<CardDTO>> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                entity,
+                new ParameterizedTypeReference<List<CardDTO>>() {}
+        );
+
+        return response.getBody();
     }
 
-    private List<LoanDTO> fetchLoanData(String userCi, int loanCode) {
+    private List<LoanDTO> fetchLoanData(String userCi, int loanCode, String accessToken) {
         String url = "http://localhost:8081/api/loan?userCi=" + userCi + "&loanCode=" + loanCode;
-        List<LoanDTO> response = restTemplate.getForObject(url, List.class);
-        System.out.println("Loan Data: " + response);
-        return response;
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + accessToken);
+
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<List<LoanDTO>> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                entity,
+                new ParameterizedTypeReference<List<LoanDTO>>() {}
+        );
+
+        return response.getBody();
     }
 
-    private List<InvestDTO> fetchInvestData(String userCi, int investCode) {
+    private List<InvestDTO> fetchInvestData(String userCi, int investCode, String accessToken) {
         String url = "http://localhost:8081/api/invest?userCi=" + userCi + "&investCode=" + investCode;
-        List<InvestDTO> response = restTemplate.getForObject(url, List.class);
-        System.out.println("Invest Data: " + response);
-        return response;
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + accessToken);
+
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<List<InvestDTO>> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                entity,
+                new ParameterizedTypeReference<List<InvestDTO>>() {}
+        );
+
+        return response.getBody();
     }
 
 
-    private List<InsuranceDTO> fetchInsuranceData(String userCi, int insuranceCode) {
+    private List<InsuranceDTO> fetchInsuranceData(String userCi, int insuranceCode, String accessToken) {
         String url = "http://localhost:8081/api/insurance?userCi=" + userCi + "&insuranceCode=" + insuranceCode;
-        List<InsuranceDTO> response = restTemplate.getForObject(url, List.class);
-        System.out.println("Insurance Data: " + response);
-        return response;
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + accessToken);
+
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<List<InsuranceDTO>> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                entity,
+                new ParameterizedTypeReference<List<InsuranceDTO>>() {}
+        );
+
+        return response.getBody();
     }
-    private List<PensionDTO> fetchPensionData(String userCi, int pensionCode) {
+    private List<PensionDTO> fetchPensionData(String userCi, int pensionCode, String accessToken) {
         String url = "http://localhost:8081/api/pension?userCi=" + userCi + "&pensionCode=" + pensionCode;
-        List<PensionDTO> response = restTemplate.getForObject(url, List.class);
-        System.out.println("Pension Data: " + response);
-        return response;
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + accessToken);
+
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<List<PensionDTO>> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                entity,
+                new ParameterizedTypeReference<List<PensionDTO>>() {}
+        );
+
+        return response.getBody();
     }
 
-    private List<PublicDTO> fetchPublicData(String userCi, int publicCode) {
+    private List<PublicDTO> fetchPublicData(String userCi, int publicCode, String accessToken) {
         String url = "http://localhost:8081/api/public?userCi=" + userCi + "&publicCode=" + publicCode;
-        List<PublicDTO> response = restTemplate.getForObject(url, List.class);
-        System.out.println("Public Data: " + response);
-        return response;
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + accessToken);
+
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<List<PublicDTO>> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                entity,
+                new ParameterizedTypeReference<List<PublicDTO>>() {}
+        );
+
+        return response.getBody();
     }
 
 }

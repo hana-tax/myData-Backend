@@ -19,13 +19,13 @@ public class PublicController {
         this.publicService = publicService;
     }
 
-    @GetMapping("/public")
-    public ResponseEntity<List<com.example.mydata.domain.PublicDTO>> getPublicData(@RequestParam int publicCode, @RequestParam String userCi) {
-        List<com.example.mydata.domain.PublicDTO> publicData = publicService.getPublicDataByPublicCodeAndUserCi(publicCode, userCi);
-        if (publicData != null && !publicData.isEmpty()) {
-            return ResponseEntity.ok(publicData);
-        } else {
-            return ResponseEntity.status(404).body(null);
-        }
-    }
+//    @GetMapping("/public")
+//    public ResponseEntity<List<com.example.mydata.domain.PublicDTO>> getPublicData(@RequestParam int publicCode, @RequestParam String userCi) {
+//        List<com.example.mydata.domain.PublicDTO> publicData = publicService.getPublicDataByPublicCodeAndUserCi(publicCode, userCi);
+//        if (publicData != null && !publicData.isEmpty()) {
+//            return ResponseEntity.ok(publicData);
+//        } else {
+//            return ResponseEntity.status(404).body(null);
+//        }
+//    }
 }
