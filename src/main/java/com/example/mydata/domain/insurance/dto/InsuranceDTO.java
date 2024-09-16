@@ -10,6 +10,7 @@ import java.util.Date;
 @Builder
 @Setter
 public class InsuranceDTO {
+    private Integer id;
     private Long insuranceCode;      // 보험 코드
     private Double insuranceAmount;   // 보험 금액
     private Date createdAt;           // 생성 날짜

@@ -10,6 +10,7 @@ import java.util.Date;
 @Builder
 @Setter
 public class PensionDTO {
+    private Integer id;
     private Long pensionCode;        // 연금 코드
     private Double amount;           // 금액
     private Date createdAt;          // 생성 날짜

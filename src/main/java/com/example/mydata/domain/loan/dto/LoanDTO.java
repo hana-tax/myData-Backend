@@ -10,6 +10,7 @@ import java.util.Date;
 @Builder
 @Setter
 public class LoanDTO {
+    private Integer id;
     private Long loanCode;          // 대출 코드
     private Double loanAmount;      // 대출 금액
     private Date loanDate;          // 대출 날짜

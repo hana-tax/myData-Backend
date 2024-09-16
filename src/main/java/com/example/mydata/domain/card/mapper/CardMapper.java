@@ -9,6 +9,9 @@ import java.util.List;
 
 @Mapper
 public interface CardMapper {
-    @Select("SELECT * FROM cardDb WHERE cardCode = #{cardCode} AND userCi = #{userCi}")
+    @Select("SELECT c.*, h.* " +
+            "FROM cardDb c " +
+            "LEFT JOIN cardHistoryDb h ON c.id = h.id " +
+            "WHERE c.cardCode = #{cardCode} AND c.userCi = #{userCi}")
     List<CardDTO> findCardDataByCardCodeAndUserCi(@Param("cardCode") int cardCode, @Param("userCi") String userCi);
 }

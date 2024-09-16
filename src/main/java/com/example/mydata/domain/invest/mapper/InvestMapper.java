@@ -9,6 +9,15 @@ import java.util.List;
 
 @Mapper
 public interface InvestMapper {
-    @Select("SELECT * FROM investDb WHERE investCode = #{investCode} AND userCi = #{userCi}")
+    @Select("""
+        SELECT i.*, 
+               d.dividendDate, 
+               d.dividendAmount, 
+               d.accountNo AS 배당발생계좌번호
+        FROM investDb i
+        LEFT JOIN dividendIncomeHistory d ON i.accountNo = d.accountNo
+        WHERE i.investCode = #{investCode} 
+          AND i.userCi = #{userCi}
+    """)
     List<InvestDTO> findInvestDataByInvestCodeAndUserCi(@Param("investCode") int investCode, @Param("userCi") String userCi);
 }

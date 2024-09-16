@@ -18,7 +18,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,6 +33,18 @@ public class MyDataProcessingService {
     public MyDataProcessingService(RestTemplate restTemplate, CodeMapper codeMapper) {
         this.restTemplate = restTemplate;
         this.codeMapper = codeMapper;
+    }
+
+    private Date convertToLocalDate(Date date) {
+        if (date == null) {
+            return null;
+        }
+        // UTC에서 로컬 시간으로 변환
+        ZonedDateTime utcDateTime = date.toInstant().atZone(ZoneId.of("UTC"));
+        ZonedDateTime localDateTime = utcDateTime.withZoneSameInstant(ZoneId.of("Asia/Seoul"));
+        System.out.println("UTC Date: " + utcDateTime);
+        System.out.println("Local Date: " + localDateTime);
+        return Date.from(localDateTime.toInstant());
     }
 
     public List<Object> processUserData(String accessToken, MyDataEnrollmentRequest request) {
@@ -102,7 +117,14 @@ public class MyDataProcessingService {
                 entity,
                 new ParameterizedTypeReference<List<BankDTO>>() {}
         );
-        return response.getBody();
+        List<BankDTO> bankData = response.getBody();
+        if (bankData != null) {
+            for (BankDTO bank : bankData) {
+                bank.setInterestDate(convertToLocalDate(bank.getInterestDate()));
+                bank.setDividendDate(convertToLocalDate(bank.getDividendDate()));
+            }
+        }
+        return bankData;
     }
 
     private List<CardDTO> fetchCardData(String userCi, int cardCode, String accessToken) {
@@ -152,8 +174,13 @@ public class MyDataProcessingService {
                 entity,
                 new ParameterizedTypeReference<List<InvestDTO>>() {}
         );
-
-        return response.getBody();
+        List<InvestDTO> investData = response.getBody();
+        if (investData != null) {
+            for (InvestDTO invest : investData) {
+                invest.setDividendDate(convertToLocalDate(invest.getDividendDate()));
+            }
+        }
+        return investData;
     }
 
 
