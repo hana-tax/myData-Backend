@@ -19,8 +19,8 @@ public interface BankMapper {
                i.interestAmount,       -- 이자 금액
                NULL AS dividendDate,    -- 배당 발생 일자
                NULL AS dividendAmount    -- 배당 금액
-        FROM bankDb b
-        LEFT JOIN interestHistory i ON b.accountNo = i.accountNo
+        FROM mydata.bankDb b
+        LEFT JOIN mydata.interestHistory i ON b.accountNo = i.accountNo
         WHERE b.bankCode = #{bankCode} 
           AND b.userCi = #{userCi}
 
@@ -35,8 +35,8 @@ public interface BankMapper {
                NULL AS interestAmount,    -- 이자 금액
                d.dividendDate,           -- 배당 발생 일자
                d.dividendAmount           -- 배당 금액
-        FROM bankDb b
-        LEFT JOIN dividendHistory d ON b.accountNo = d.accountNo
+        FROM mydata.bankDb b
+        LEFT JOIN mydata.dividendHistory d ON b.accountNo = d.accountNo
         WHERE b.bankCode = #{bankCode} 
           AND b.userCi = #{userCi}
     """)

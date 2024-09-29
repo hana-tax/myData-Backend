@@ -36,4 +36,5 @@ public class MyDataController {
             return ResponseEntity.status(500).body(null);  // 실패 시 500 에러 반환
         }
     }
+
 }

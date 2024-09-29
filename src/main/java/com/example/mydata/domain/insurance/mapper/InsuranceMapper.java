@@ -9,6 +9,6 @@ import java.util.List;
 
 @Mapper
 public interface InsuranceMapper {
-    @Select("SELECT * FROM insuranceDb WHERE insuranceCode = #{insuranceCode} AND userCi = #{userCi}")
+    @Select("SELECT * FROM mydata.insuranceDb WHERE insuranceCode = #{insuranceCode} AND userCi = #{userCi}")
     List<InsuranceDTO> findInsuranceDataByInsuranceCodeAndUserCi(@Param("insuranceCode") int insuranceCode, @Param("userCi") String userCi);
 }

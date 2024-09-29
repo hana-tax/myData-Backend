@@ -1,5 +1,6 @@
-package com.example.mydata.domain;
+package com.example.mydata.domain.publicOffice.controller;
 
+import com.example.mydata.domain.publicOffice.service.PublicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,10 +13,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class PublicController {
-    private final com.example.mydata.domain.PublicService publicService;
+private final PublicService publicService;
 
     @Autowired
-    public PublicController(com.example.mydata.domain.PublicService publicService) {
+    public PublicController(PublicService publicService) {
         this.publicService = publicService;
     }
 

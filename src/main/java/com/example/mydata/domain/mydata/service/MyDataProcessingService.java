@@ -1,6 +1,6 @@
 package com.example.mydata.domain.mydata.service;
 
-import com.example.mydata.domain.PublicDTO;
+import com.example.mydata.domain.publicOffice.dto.PublicDTO;
 import com.example.mydata.domain.bank.dto.BankDTO;
 import com.example.mydata.domain.card.dto.CardDTO;
 import com.example.mydata.domain.insurance.dto.InsuranceDTO;

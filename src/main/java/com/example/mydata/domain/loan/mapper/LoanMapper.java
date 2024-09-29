@@ -9,6 +9,6 @@ import java.util.List;
 
 @Mapper
 public interface LoanMapper {
-    @Select("SELECT * FROM loanDb WHERE loanCode = #{loanCode} AND userCi = #{userCi}")
+    @Select("SELECT * FROM mydata.loanDb WHERE loanCode = #{loanCode} AND userCi = #{userCi}")
     List<LoanDTO> findLoanDataByLoanCodeAndUserCi(@Param("loanCode") int loanCode, @Param("userCi") String userCi);
 }

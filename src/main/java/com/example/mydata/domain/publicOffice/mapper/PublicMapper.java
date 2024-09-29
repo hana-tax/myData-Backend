@@ -1,4 +1,5 @@
-package com.example.mydata.domain;
+package com.example.mydata.domain.publicOffice.mapper;
+import com.example.mydata.domain.publicOffice.dto.PublicDTO;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -8,6 +9,6 @@ import java.util.List;
 
 @Mapper
 public interface PublicMapper {
-    @Select("SELECT * FROM pensionDb WHERE pensionCode = #{pensionCode} AND userCi = #{userCi}")
+    @Select("SELECT * FROM mydata.pensionDb WHERE pensionCode = #{pensionCode} AND userCi = #{userCi}")
     List<PublicDTO> findPensionDataByPensionCodeAndUserCi(@Param("pensionCode") int pensionCode, @Param("userCi") String userCi);
 }

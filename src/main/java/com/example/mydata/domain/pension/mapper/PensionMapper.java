@@ -9,6 +9,6 @@ import java.util.List;
 
 @Mapper
 public interface PensionMapper {
-    @Select("SELECT * FROM pensionDb WHERE pensionCode = #{pensionCode} AND userCi = #{userCi}")
+    @Select("SELECT * FROM mydata.pensionDb WHERE pensionCode = #{pensionCode} AND userCi = #{userCi}")
     List<PensionDTO> findPensionDataByPensionCodeAndUserCi(@Param("pensionCode") int pensionCode, @Param("userCi") String userCi);
 }

@@ -1,5 +1,7 @@
-package com.example.mydata.domain;
+package com.example.mydata.domain.publicOffice.service;
 
+import com.example.mydata.domain.publicOffice.dto.PublicDTO;
+import com.example.mydata.domain.publicOffice.mapper.PublicMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
