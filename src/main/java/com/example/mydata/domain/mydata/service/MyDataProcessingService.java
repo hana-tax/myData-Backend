@@ -106,7 +106,7 @@ public class MyDataProcessingService {
         return assets;
     }
     private List<BankDTO> fetchBankData(String userCi, int bankCode, String accessToken) {
-        String url = "http://localhost:8081/api/bank?userCi=" + userCi + "&bankCode=" + bankCode;
+        String url = "http://52.62.204.212:8081/api/bank?userCi=" + userCi + "&bankCode=" + bankCode;
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + accessToken);
         HttpEntity<String> entity = new HttpEntity<>(headers);
@@ -128,7 +128,7 @@ public class MyDataProcessingService {
     }
 
     private List<CardDTO> fetchCardData(String userCi, int cardCode, String accessToken) {
-        String url = "http://localhost:8081/api/card?userCi=" + userCi + "&cardCode=" + cardCode;
+        String url = "http://52.62.204.212:8081/api/card?userCi=" + userCi + "&cardCode=" + cardCode;
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + accessToken);
 
@@ -145,7 +145,7 @@ public class MyDataProcessingService {
     }
 
     private List<LoanDTO> fetchLoanData(String userCi, int loanCode, String accessToken) {
-        String url = "http://localhost:8081/api/loan?userCi=" + userCi + "&loanCode=" + loanCode;
+        String url = "http://52.62.204.212:8081/api/loan?userCi=" + userCi + "&loanCode=" + loanCode;
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + accessToken);
 
@@ -162,7 +162,7 @@ public class MyDataProcessingService {
     }
 
     private List<InvestDTO> fetchInvestData(String userCi, int investCode, String accessToken) {
-        String url = "http://localhost:8081/api/invest?userCi=" + userCi + "&investCode=" + investCode;
+        String url = "http://52.62.204.212:8081/api/invest?userCi=" + userCi + "&investCode=" + investCode;
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + accessToken);
 
@@ -185,7 +185,7 @@ public class MyDataProcessingService {
 
 
     private List<InsuranceDTO> fetchInsuranceData(String userCi, int insuranceCode, String accessToken) {
-        String url = "http://localhost:8081/api/insurance?userCi=" + userCi + "&insuranceCode=" + insuranceCode;
+        String url = "http://52.62.204.212:8081/api/insurance?userCi=" + userCi + "&insuranceCode=" + insuranceCode;
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + accessToken);
 
@@ -201,7 +201,7 @@ public class MyDataProcessingService {
         return response.getBody();
     }
     private List<PensionDTO> fetchPensionData(String userCi, int pensionCode, String accessToken) {
-        String url = "http://localhost:8081/api/pension?userCi=" + userCi + "&pensionCode=" + pensionCode;
+        String url = "http://52.62.204.212:8081/api/pension?userCi=" + userCi + "&pensionCode=" + pensionCode;
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + accessToken);
 
@@ -218,7 +218,7 @@ public class MyDataProcessingService {
     }
 
     private List<PublicDTO> fetchPublicData(String userCi, int publicCode, String accessToken) {
-        String url = "http://localhost:8081/api/public?userCi=" + userCi + "&publicCode=" + publicCode;
+        String url = "http://52.62.204.212:8081/api/public?userCi=" + userCi + "&publicCode=" + publicCode;
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + accessToken);
 
